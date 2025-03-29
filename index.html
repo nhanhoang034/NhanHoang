@@ -32,7 +32,7 @@
 </head>
 <body>
     <h2>Danh Sách Hội Viên</h2>
-    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, mã hội viên hoặc quyền" onkeyup="searchMember()">
+    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, mã hội viên hoặc quyền">
     <table>
         <thead>
             <tr>
@@ -42,47 +42,9 @@
             </tr>
         </thead>
         <tbody id="memberTable">
-            <!-- Dữ liệu sẽ được thêm vào đây -->
+            <!-- Dữ liệu từ CSV sẽ được thêm vào đây -->
         </tbody>
     </table>
-    <script>
-        const members = [
-            { name: "Nguyễn Văn A", id: "001", role: "Admin" },
-            { name: "Trần Thị B", id: "002", role: "User" },
-            { name: "Lê Văn C", id: "003", role: "Moderator" }
-        ];
-
-        function loadMembers() {
-            const table = document.getElementById("memberTable");
-            members.forEach(member => {
-                let row = `<tr>
-                    <td>${member.name}</td>
-                    <td>${member.id}</td>
-                    <td>${member.role}</td>
-                </tr>`;
-                table.innerHTML += row;
-            });
-        }
-
-        function searchMember() {
-            let input = document.getElementById("searchInput").value.toLowerCase();
-            let table = document.getElementById("memberTable");
-            table.innerHTML = "";
-            members.forEach(member => {
-                if (member.name.toLowerCase().includes(input) || 
-                    member.id.toLowerCase().includes(input) || 
-                    member.role.toLowerCase().includes(input)) {
-                    let row = `<tr>
-                        <td>${member.name}</td>
-                        <td>${member.id}</td>
-                        <td>${member.role}</td>
-                    </tr>`;
-                    table.innerHTML += row;
-                }
-            });
-        }
-
-        window.onload = loadMembers;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
