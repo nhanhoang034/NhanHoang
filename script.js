@@ -5,19 +5,27 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             let response = await fetch('data.csv');
             let csvData = await response.text();
-            console.log("📥 Dữ liệu CSV tải về:", csvData); // Kiểm tra dữ liệu tải về
+            console.log("📥 Dữ liệu CSV tải về:", csvData);
 
-            // Kiểm tra dữ liệu có rỗng không
-            if (!csvData) {
+            if (!csvData.trim()) {
                 console.error("⚠️ File CSV rỗng!");
                 return;
             }
 
-            // Tách CSV (Xử lý cả Windows "\r\n" và Unix "\n")
-            data = csvData.split(/\r?\n/).slice(1).map(line => line.split(','));
+            // Chia dữ liệu theo dòng và bỏ dòng rỗng
+            let rows = csvData.split(/\r?\n/).filter(line => line.trim() !== "");
+            if (rows.length < 2) {
+                console.error("⚠️ File CSV không có dữ liệu hợp lệ!");
+                return;
+            }
+
+            data = rows.slice(1).map(line => {
+                let cols = line.split(',').map(cell => cell.trim());
+                return cols.length >= 3 ? cols.slice(0, 3) : null;
+            }).filter(row => row !== null);
+
             console.log("🔍 Dữ liệu CSV sau khi tách:", data);
 
-            // Kiểm tra bảng có tồn tại không
             const tableBody = document.getElementById("memberTable");
             if (!tableBody) {
                 console.error("❌ Không tìm thấy phần tử 'memberTable'. Kiểm tra HTML.");
@@ -39,38 +47,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         console.log("🖥️ Hiển thị dữ liệu trên bảng:", filteredData);
-
-        tableBody.innerHTML = ""; // Xóa dữ liệu cũ
+        tableBody.innerHTML = ""; 
 
         filteredData.forEach(row => {
-            if (row.length >= 3) {
-                const tr = document.createElement("tr");
-                row.forEach(cell => {
-                    const td = document.createElement("td");
-                    td.textContent = cell.trim();
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            }
+            const tr = document.createElement("tr");
+            row.forEach(cell => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            tableBody.appendChild(tr);
         });
     }
 
     document.getElementById("searchInput").addEventListener("input", function () {
-        const value = this.value.toLowerCase();
+        const value = this.value.toLowerCase().trim();
         console.log("🔍 Người dùng nhập tìm kiếm:", value);
 
-        let filteredData = data.filter(row => 
-            row[0]?.toLowerCase().includes(value) ||  // Họ và tên
-            row[1]?.toLowerCase().includes(value) ||  // Mã hội viên
-            row[2]?.toLowerCase().includes(value)     // Quyền
+        if (!value) {
+            renderTable(data);
+            return;
+        }
+
+        let filteredData = data.filter(row =>
+            row.some(cell => cell.toLowerCase().includes(value))
         );
 
         console.log("🎯 Kết quả lọc:", filteredData);
         renderTable(filteredData);
     });
 
-    // Chặn favicon request gây lỗi 404
     document.head.insertAdjacentHTML("beforeend", "<link rel='icon' href='data:,'>");
-
     loadCSV();
 });
