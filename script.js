@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Tách CSV (Xử lý cả Windows "\r\n" và Unix "\n")
-            data = csvData.split(/\r?\n/).slice(1).map(line => line.split(','));
+            data = csvData.split(/\r?\n/).slice(1).map(line => line.split(',').map(cell => cell.trim()));
             console.log("🔍 Dữ liệu CSV sau khi tách:", data);
 
             // Kiểm tra bảng có tồn tại không
@@ -39,31 +39,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         console.log("🖥️ Hiển thị dữ liệu trên bảng:", filteredData);
-
         tableBody.innerHTML = ""; // Xóa dữ liệu cũ
 
-        filteredData.forEach(row => {
-            if (row.length >= 3) {
-                const tr = document.createElement("tr");
-                row.forEach(cell => {
-                    const td = document.createElement("td");
-                    td.textContent = cell.trim();
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
+        filteredData.forEach((row, index) => {
+            let cleanRow = row.map(cell => cell.trim()); // Chuẩn hóa từng ô dữ liệu
+            console.log(`🔎 Kiểm tra hàng ${index + 1}:`, cleanRow);
+            
+            if (cleanRow.length < 3) {
+                cleanRow[2] = "Chưa xác định"; // Nếu thiếu cột "Quyền", gán mặc định
             }
+
+            const tr = document.createElement("tr");
+            cleanRow.forEach(cell => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            console.log("➕ Thêm dòng:", tr);
+            tableBody.appendChild(tr);
         });
     }
 
     document.getElementById("searchInput").addEventListener("input", function () {
-        const value = this.value.toLowerCase();
+        let value = this.value.toLowerCase().trim().replace(/\s+/g, " "); // Bỏ khoảng trắng dư
         console.log("🔍 Người dùng nhập tìm kiếm:", value);
 
-        let filteredData = data.filter(row => 
-            row[0]?.toLowerCase().includes(value) ||  // Họ và tên
-            row[1]?.toLowerCase().includes(value) ||  // Mã hội viên
-            row[2]?.toLowerCase().includes(value)     // Quyền
-        );
+        let filteredData = data.filter(row => {
+            let cleanRow = row.map(cell => cell.trim().toLowerCase().replace(/\s+/g, " "));
+            return cleanRow[0]?.includes(value) || cleanRow[1]?.includes(value) || cleanRow[2]?.includes(value);
+        });
 
         console.log("🎯 Kết quả lọc:", filteredData);
         renderTable(filteredData);
