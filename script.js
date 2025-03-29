@@ -1,46 +1,45 @@
-let data = [];
-
-// Tự động tải file CSV khi trang load
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('data.csv')
-        .then(response => response.text())
-        .then(csvData => {
+    let data = [];
+
+    async function loadCSV() {
+        try {
+            let response = await fetch('data.csv');
+            let csvData = await response.text();
             data = csvData.split("\n").slice(1).map(line => line.split(','));
             renderTable(data);
-        })
-        .catch(error => console.error("Lỗi khi tải file CSV:", error));
+        } catch (error) {
+            console.error("Lỗi khi tải file CSV:", error);
+        }
+    }
 
-    // Lọc dữ liệu khi nhập vào ô tìm kiếm
+    function renderTable(filteredData) {
+        const tableBody = document.getElementById("tableBody");
+        tableBody.innerHTML = "";
+        filteredData.forEach(row => {
+            if (row.length >= 3) {
+                const tr = document.createElement("tr");
+                row.forEach(cell => {
+                    const td = document.createElement("td");
+                    td.textContent = cell.trim();
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            }
+        });
+    }
+
     document.getElementById("searchInput").addEventListener("input", function () {
-        let searchText = this.value.toLowerCase().trim();
+        const value = this.value.toLowerCase();
         let filteredData = [];
 
-        if (searchText !== "") {
-            if (!isNaN(searchText)) {
-                filteredData = data.filter(row => row[2] && row[2].toLowerCase().includes(searchText)); // Lọc theo Quyền
-            } else {
-                filteredData = data.filter(row => row[0] && row[0].toLowerCase().includes(searchText)); // Lọc theo Họ và Tên
-            }
+        if (!isNaN(value) && value !== "") {
+            filteredData = data.filter(row => row[1] && row[1].toLowerCase().includes(value));
         } else {
-            filteredData = data; // Nếu không nhập gì, hiển thị full
+            filteredData = data.filter(row => row[0] && row[0].toLowerCase().includes(value));
         }
 
         renderTable(filteredData);
     });
-});
 
-function renderTable(filteredData) {
-    const tableBody = document.getElementById("tableBody");
-    tableBody.innerHTML = "";
-    filteredData.forEach(row => {
-        if (row.length >= 3) {
-            const tr = document.createElement("tr");
-            row.forEach(cell => {
-                const td = document.createElement("td");
-                td.textContent = cell;
-                tr.appendChild(td);
-            });
-            tableBody.appendChild(tr);
-        }
-    });
-}
+    loadCSV();
+});
