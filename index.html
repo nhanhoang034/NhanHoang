@@ -4,34 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh Sách Hội Viên</title>
+    <link rel="icon" href="https://via.placeholder.com/32">
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        input {
-            width: 60%;
-            padding: 8px;
-            margin: 10px 0;
-        }
         table {
             width: 80%;
-            margin: 0 auto;
+            margin: 20px auto;
             border-collapse: collapse;
         }
         th, td {
             border: 1px solid black;
-            padding: 8px;
-            text-align: left;
+            padding: 10px;
         }
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Danh Sách Hội Viên</h1>
-    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, mã hội viên hoặc quyền">
+    <h2>Danh Sách Hội Viên</h2>
+    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, mã hội viên hoặc quyền" onkeyup="searchMember()">
     <table>
         <thead>
             <tr>
@@ -40,8 +41,48 @@
                 <th>Quyền</th>
             </tr>
         </thead>
-        <tbody id="tableBody"></tbody>
+        <tbody id="memberTable">
+            <!-- Dữ liệu sẽ được thêm vào đây -->
+        </tbody>
     </table>
-    <script src="script.js"></script>
+    <script>
+        const members = [
+            { name: "Nguyễn Văn A", id: "001", role: "Admin" },
+            { name: "Trần Thị B", id: "002", role: "User" },
+            { name: "Lê Văn C", id: "003", role: "Moderator" }
+        ];
+
+        function loadMembers() {
+            const table = document.getElementById("memberTable");
+            members.forEach(member => {
+                let row = `<tr>
+                    <td>${member.name}</td>
+                    <td>${member.id}</td>
+                    <td>${member.role}</td>
+                </tr>`;
+                table.innerHTML += row;
+            });
+        }
+
+        function searchMember() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let table = document.getElementById("memberTable");
+            table.innerHTML = "";
+            members.forEach(member => {
+                if (member.name.toLowerCase().includes(input) || 
+                    member.id.toLowerCase().includes(input) || 
+                    member.role.toLowerCase().includes(input)) {
+                    let row = `<tr>
+                        <td>${member.name}</td>
+                        <td>${member.id}</td>
+                        <td>${member.role}</td>
+                    </tr>`;
+                    table.innerHTML += row;
+                }
+            });
+        }
+
+        window.onload = loadMembers;
+    </script>
 </body>
 </html>
