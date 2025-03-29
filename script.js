@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let response = await fetch('data.csv');
             let csvData = await response.text();
             console.log("Dữ liệu CSV tải về:", csvData); // Kiểm tra dữ liệu
-            data = csvData.split("\n").slice(1).map(line => line.split(','));
+            data = csvData.split("\n").slice(1).map(line => line.split(',').map(cell => cell.trim()));
             renderTable(data);
         } catch (error) {
             console.error("Lỗi khi tải file CSV:", error);
@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderTable(filteredData) {
-        const tableBody = document.getElementById("memberTable");
+        const tableBody = document.getElementById("tableBody"); // Đúng ID của <tbody>
         tableBody.innerHTML = "";
         filteredData.forEach(row => {
             if (row.length >= 3) {
                 const tr = document.createElement("tr");
                 row.forEach(cell => {
                     const td = document.createElement("td");
-                    td.textContent = cell.trim();
+                    td.textContent = cell;
                     tr.appendChild(td);
                 });
                 tableBody.appendChild(tr);
@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("searchInput").addEventListener("input", function () {
         const value = this.value.toLowerCase();
         let filteredData = data.filter(row => 
-            row[0]?.toLowerCase().includes(value) ||  // Tên
-            row[1]?.toLowerCase().includes(value) ||  // Mã Hội Viên
-            row[2]?.toLowerCase().includes(value)     // Quyền
+            row[0]?.toLowerCase().includes(value) ||  
+            row[1]?.toLowerCase().includes(value) ||  
+            row[2]?.toLowerCase().includes(value)   
         );
         renderTable(filteredData);
     });
