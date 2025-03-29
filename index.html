@@ -3,36 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Hội Viên</title>
-    <link rel="icon" href="https://via.placeholder.com/32">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        input {
-            width: 60%;
-            padding: 10px;
-            margin: 10px 0;
-        }
-    </style>
+    <title>Tra Cứu Thành Viên</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Danh Sách Hội Viên</h2>
-    <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, mã hội viên hoặc quyền">
+    <h2>Tra Cứu Thành Viên</h2>
+    <input type="text" id="searchInput" placeholder="Nhập tên, mã hội viên hoặc quyền...">
+    
     <table>
         <thead>
             <tr>
@@ -42,9 +19,10 @@
             </tr>
         </thead>
         <tbody id="memberTable">
-            <!-- Dữ liệu từ CSV sẽ được thêm vào đây -->
+            <!-- Dữ liệu sẽ được thêm vào đây -->
         </tbody>
     </table>
+
     <script src="script.js"></script>
 </body>
 </html>
