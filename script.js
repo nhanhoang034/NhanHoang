@@ -30,7 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderTable(filteredData) {
         const tableBody = document.getElementById("memberTable");
-        if (!tableBody) return;
+        if (!tableBody) {
+            console.error("Lỗi: Không tìm thấy bảng để hiển thị dữ liệu!");
+            return;
+        }
 
         tableBody.innerHTML = ""; // Xóa dữ liệu cũ
 
@@ -56,6 +59,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         renderTable(filteredData);
     });
+
+    // Chặn favicon request gây lỗi 404
+    document.head.insertAdjacentHTML("beforeend", "<link rel='icon' href='data:,'>");
 
     loadCSV();
 });
