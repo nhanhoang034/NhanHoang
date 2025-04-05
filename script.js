@@ -51,9 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 case "4":
                     bgColor = "#3399ff"; textColor = "#ffffff"; break; // xanh dương
                 case "5":
-                    bgColor = "#ffcc66"; textColor = "#000000"; break; // cam
+                    bgColor = "#ff9900"; textColor = "#000000"; break; // cam
                 case "6":
-                    bgColor = "#ff6666"; textColor = "#ffffff"; break; // đỏ
+                    bgColor = "#ff3333"; textColor = "#ffffff"; break; // đỏ
                 case "7":
                     bgColor = "#cc0000"; textColor = "#ffffff"; break; // đỏ đậm
                 case "8":
