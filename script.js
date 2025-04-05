@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
                     if (cells.length < 3) cells[2] = "0"; // Nếu thiếu quyền, gán mặc định là 0
-                    cells[2] = cells[2].trim(); // Trim thêm quyền để tránh bị lỗi
+                    cells[2] = cells[2].trim();
                     return cells;
                 });
 
@@ -38,26 +38,39 @@ document.addEventListener("DOMContentLoaded", function () {
             const tr = document.createElement("tr");
 
             const role = row[2];
-            let bgColor = "#d6d6d6"; // Mặc định xám
+            let bgColor = "#cccccc";  // mặc định: xám
+            let textColor = "#000000";
 
             switch (role) {
-                case "1": bgColor = "#ffffff"; break;   // trắng
-                case "2": bgColor = "#fff200"; break;   // vàng
-                case "3": bgColor = "#28a745"; break;   // xanh lá
-                case "4": bgColor = "#007bff"; break;   // xanh dương
-                case "5": bgColor = "#fd7e14"; break;   // cam
-                case "6": bgColor = "#dc3545"; break;   // đỏ
-                case "7": bgColor = "#8b0000"; break;   // đỏ đậm
-                case "8": bgColor = "#8b4513"; break;   // nâu
-                case "9": bgColor = "#9b59b6"; break;   // tím
-                case "20": bgColor = "#6f42c1"; break;  // tím đậm
+                case "1":
+                    bgColor = "#ffffff"; textColor = "#000000"; break; // trắng
+                case "2":
+                    bgColor = "#ffff66"; textColor = "#000000"; break; // vàng
+                case "3":
+                    bgColor = "#66cc66"; textColor = "#ffffff"; break; // xanh lá
+                case "4":
+                    bgColor = "#3399ff"; textColor = "#ffffff"; break; // xanh dương
+                case "5":
+                    bgColor = "#ffcc66"; textColor = "#000000"; break; // cam
+                case "6":
+                    bgColor = "#ff6666"; textColor = "#ffffff"; break; // đỏ
+                case "7":
+                    bgColor = "#cc0000"; textColor = "#ffffff"; break; // đỏ đậm
+                case "8":
+                    bgColor = "#996633"; textColor = "#ffffff"; break; // nâu
+                case "9":
+                    bgColor = "#9966cc"; textColor = "#ffffff"; break; // tím
+                case "20":
+                    bgColor = "#663399"; textColor = "#ffffff"; break; // tím đậm
+                default:
+                    bgColor = "#cccccc"; textColor = "#000000"; break; // các quyền khác
             }
-
-            tr.style.backgroundColor = bgColor;
 
             row.forEach(cell => {
                 const td = document.createElement("td");
                 td.textContent = cell;
+                td.style.backgroundColor = bgColor;
+                td.style.color = textColor;
                 tr.appendChild(td);
             });
 
@@ -79,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const filtered = data.filter(row => {
             const matchKeyword = row.some(cell => cell.toLowerCase().includes(keyword));
-            const matchRole = selectedRole === "" || row[2] === selectedRole; // Lọc quyền nếu có chọn
+            const matchRole = selectedRole === "" || row[2] === selectedRole;
             return matchKeyword && matchRole;
         });
 
