@@ -2,18 +2,21 @@ body {
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     margin: 20px;
+    font-size: 18px; /* <-- Tăng cỡ chữ toàn bộ */
 }
 
 input, select {
     width: 300px;
     padding: 8px;
     margin: 10px 5px;
+    font-size: 16px; /* <-- Tăng cỡ chữ cho ô nhập và ô chọn */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-size: 17px; /* <-- Tăng cỡ chữ trong bảng */
 }
 
 th, td {
@@ -23,4 +26,5 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+    font-size: 18px; /* <-- Tăng cỡ chữ tiêu đề bảng */
 }
