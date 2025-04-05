@@ -9,14 +9,14 @@ input, select {
     width: 300px;
     padding: 8px;
     margin: 10px 5px;
-    font-size: 20px; /* <-- Tăng cỡ chữ cho ô nhập và ô chọn */
+    font-size: 19px; /* <-- Tăng cỡ chữ cho ô nhập và ô chọn */
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    font-size: 22px; /* <-- Tăng cỡ chữ trong bảng */
+    font-size: 19px; /* <-- Tăng cỡ chữ trong bảng */
 }
 
 th, td {
