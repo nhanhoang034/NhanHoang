@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
             data = csvData
                 .split(/\r?\n/)
                 .slice(1)
-                .map(line => line.split(',').map(cell => cell.trim()));
+                .map(line => {
+                    let cells = line.split(',').map(cell => cell.trim());
+                    if (cells.length < 3) cells[2] = "0"; // Nếu thiếu quyền, gán mặc định là 0
+                    return cells;
+                });
+
             renderTable(data);
         } catch (error) {
             console.error("🚨 Lỗi khi tải file CSV:", error);
@@ -28,11 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderTable(filteredData) {
         tableBody.innerHTML = "";
         filteredData.forEach(row => {
-            let cleanRow = row.map(cell => cell.trim());
-            if (cleanRow.length < 3) cleanRow[2] = "Chưa xác định";
-
             const tr = document.createElement("tr");
-            cleanRow.forEach(cell => {
+            row.forEach(cell => {
                 const td = document.createElement("td");
                 td.textContent = cell;
                 tr.appendChild(td);
@@ -49,16 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function filterAndRender() {
-        let value = searchInput.value.toLowerCase().trim();
-        let selectedRole = roleFilter.value;
+        const keyword = searchInput.value.toLowerCase().trim();
+        const selectedRole = roleFilter.value;
 
-        let filteredData = data.filter(row => {
-            const matchesSearch = row.some(cell => cell.toLowerCase().includes(value));
-            const matchesRole = selectedRole === "" || row[2].trim() === selectedRole;
-            return matchesSearch && matchesRole;
+        const filtered = data.filter(row => {
+            const matchKeyword = row.some(cell => cell.toLowerCase().includes(keyword));
+            const matchRole = selectedRole === "" || row[2] === selectedRole;
+            return matchKeyword && matchRole;
         });
 
-        renderTable(filteredData);
+        renderTable(filtered);
     }
 
     searchInput.addEventListener("input", filterAndRender);
