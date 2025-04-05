@@ -17,10 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data = csvData
                 .split(/\r?\n/)
-                .slice(1)
+                .slice(1) // Bỏ qua dòng tiêu đề
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
                     if (cells.length < 3) cells[2] = "0"; // Nếu thiếu quyền, gán mặc định là 0
+                    cells[2] = cells[2].trim(); // Trim thêm quyền để tránh bị lỗi
                     return cells;
                 });
 
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const filtered = data.filter(row => {
             const matchKeyword = row.some(cell => cell.toLowerCase().includes(keyword));
-            const matchRole = selectedRole === "" || row[2] === selectedRole;
+            const matchRole = selectedRole === "" || row[2] === selectedRole; // Lọc quyền nếu có chọn
             return matchKeyword && matchRole;
         });
 
