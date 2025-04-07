@@ -37,6 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
         filteredData.forEach(row => {
             const tr = document.createElement("tr");
 
+            // Cột Ảnh
+            const imgTd = document.createElement("td");
+            const img = document.createElement("img");
+            img.src = row[0]; // Giả sử cột đầu tiên chứa đường dẫn hình ảnh
+            img.alt = "Ảnh học viên";
+            img.style.width = "50px"; // Điều chỉnh kích thước ảnh nếu cần
+            img.style.height = "50px"; // Điều chỉnh kích thước ảnh nếu cần
+            imgTd.appendChild(img);
+            tr.appendChild(imgTd);
+
             const role = row[2];
             let bgColor = "#cccccc";  // mặc định: xám
             let textColor = "#000000";
@@ -64,12 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     bgColor = "#cccccc"; textColor = "#000000"; break; // các quyền khác
             }
 
-            row.forEach(cell => {
-                const td = document.createElement("td");
-                td.textContent = cell;
-                td.style.backgroundColor = bgColor;
-                td.style.color = textColor;
-                tr.appendChild(td);
+            row.forEach((cell, index) => {
+                if (index !== 0) {  // Bỏ qua cột ảnh (đã xử lý ở trên)
+                    const td = document.createElement("td");
+                    td.textContent = cell;
+                    td.style.backgroundColor = bgColor;
+                    td.style.color = textColor;
+                    tr.appendChild(td);
+                }
             });
 
             tableBody.appendChild(tr);
@@ -102,5 +114,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadCSV();
 });
-
-
