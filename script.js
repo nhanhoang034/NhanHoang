@@ -85,6 +85,11 @@ document.addEventListener("DOMContentLoaded", function () {
             nameCell.textContent = row[0]; // Họ và Tên
             nameCell.style.backgroundColor = bgColor;
             nameCell.style.color = textColor;
+            nameCell.style.cursor = "pointer"; // Thêm con trỏ khi hover vào tên
+            nameCell.addEventListener("click", function () {
+                modalImg.src = row[3]; // Gán ảnh vào modal
+                imageModal.style.display = "flex"; // Mở modal
+            });
             tr.appendChild(nameCell);
 
             // Cột Mã Hội Viên
@@ -100,23 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
             roleCell.style.backgroundColor = bgColor;
             roleCell.style.color = textColor;
             tr.appendChild(roleCell);
-
-            // Cột Ảnh
-            const imgCell = document.createElement("td");
-            const img = document.createElement("img");
-            img.src = row[3]; // Link ảnh từ cột Ảnh trong CSV
-            img.alt = "Chưa có ảnh";
-            img.style.width = "50px";
-            img.style.height = "50px";
-            img.style.cursor = "pointer"; // Thêm con trỏ khi hover lên ảnh
-            img.addEventListener("click", function () {
-                modalImg.src = img.src; // Gán ảnh vào modal
-                imageModal.style.display = "flex"; // Mở modal
-            });
-            imgCell.appendChild(img);
-            imgCell.style.backgroundColor = bgColor;
-            imgCell.style.color = textColor;
-            tr.appendChild(imgCell);
 
             tableBody.appendChild(tr);
         });
