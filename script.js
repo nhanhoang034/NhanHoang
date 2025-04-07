@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .slice(1) // Bỏ qua dòng tiêu đề
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
-                    if (cells.length < 4) cells[3] = "0"; // Gán mặc định quyền nếu thiếu
+                    if (cells.length < 4) cells[3] = ""; // Nếu thiếu ảnh, gán mặc định là rỗng
                     return cells;
                 });
 
@@ -36,56 +36,65 @@ document.addEventListener("DOMContentLoaded", function () {
         filteredData.forEach(row => {
             const tr = document.createElement("tr");
 
-            const role = row[3];
+            const role = row[2];
             let bgColor = "#cccccc";  // mặc định: xám
             let textColor = "#000000";
 
             switch (role) {
                 case "2":
-                    bgColor = "#ffff66"; textColor = "#000000"; break;
+                    bgColor = "#ffff66"; textColor = "#000000"; break; // vàng
                 case "3":
-                    bgColor = "#66cc66"; textColor = "#ffffff"; break;
+                    bgColor = "#66cc66"; textColor = "#ffffff"; break; // xanh lá
                 case "4":
-                    bgColor = "#3399ff"; textColor = "#ffffff"; break;
+                    bgColor = "#3399ff"; textColor = "#ffffff"; break; // xanh dương
                 case "5":
-                    bgColor = "#ff9900"; textColor = "#000000"; break;
+                    bgColor = "#ff9900"; textColor = "#000000"; break; // cam
                 case "6":
-                    bgColor = "#ff3333"; textColor = "#ffffff"; break;
+                    bgColor = "#ff3333"; textColor = "#ffffff"; break; // đỏ
                 case "7":
-                    bgColor = "#cc0000"; textColor = "#ffffff"; break;
+                    bgColor = "#cc0000"; textColor = "#ffffff"; break; // đỏ đậm
                 case "8":
-                    bgColor = "#996633"; textColor = "#ffffff"; break;
+                    bgColor = "#996633"; textColor = "#ffffff"; break; // nâu
                 case "9":
-                    bgColor = "#9966cc"; textColor = "#ffffff"; break;
+                    bgColor = "#9966cc"; textColor = "#ffffff"; break; // tím
                 case "20":
-                    bgColor = "#663399"; textColor = "#ffffff"; break;
+                    bgColor = "#663399"; textColor = "#ffffff"; break; // tím đậm
                 default:
-                    bgColor = "#cccccc"; textColor = "#000000"; break;
+                    bgColor = "#cccccc"; textColor = "#000000"; break; // các quyền khác
             }
 
-            // Tạo các ô: Họ và tên, Mã hội viên, Quyền
-            for (let i = 1; i <= 3; i++) {
-                const td = document.createElement("td");
-                td.textContent = row[i];
-                td.style.backgroundColor = bgColor;
-                td.style.color = textColor;
-                tr.appendChild(td);
-            }
+            // Cột Họ và Tên
+            const nameCell = document.createElement("td");
+            nameCell.textContent = row[0]; // Họ và Tên
+            nameCell.style.backgroundColor = bgColor;
+            nameCell.style.color = textColor;
+            tr.appendChild(nameCell);
 
-            // Cột ảnh (lấy từ cột ảnh trong CSV)
-            const imgTd = document.createElement("td");
+            // Cột Mã Hội Viên
+            const memberCodeCell = document.createElement("td");
+            memberCodeCell.textContent = row[1]; // Mã Hội Viên
+            memberCodeCell.style.backgroundColor = bgColor;
+            memberCodeCell.style.color = textColor;
+            tr.appendChild(memberCodeCell);
+
+            // Cột Quyền
+            const roleCell = document.createElement("td");
+            roleCell.textContent = row[2]; // Quyền
+            roleCell.style.backgroundColor = bgColor;
+            roleCell.style.color = textColor;
+            tr.appendChild(roleCell);
+
+            // Cột Ảnh
+            const imgCell = document.createElement("td");
             const img = document.createElement("img");
-            img.src = row[0]; // Lấy đường dẫn ảnh từ cột đầu tiên
-            img.alt = "Ảnh";
-            img.style.width = "60px";
-            img.style.height = "60px";
-            img.style.objectFit = "cover";
-            img.style.borderRadius = "8px";
-            imgTd.appendChild(img);
-            imgTd.style.textAlign = "center";
-            imgTd.style.backgroundColor = bgColor;
-            imgTd.style.color = textColor;
-            tr.appendChild(imgTd);
+            img.src = row[3]; // Link ảnh từ cột Ảnh trong CSV
+            img.alt = "Ảnh học viên";
+            img.style.width = "50px";
+            img.style.height = "50px";
+            imgCell.appendChild(img);
+            imgCell.style.backgroundColor = bgColor;
+            imgCell.style.color = textColor;
+            tr.appendChild(imgCell);
 
             tableBody.appendChild(tr);
         });
@@ -104,8 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedRole = roleFilter.value;
 
         const filtered = data.filter(row => {
-            const matchKeyword = row.slice(1).some(cell => cell.toLowerCase().includes(keyword));
-            const matchRole = selectedRole === "" || row[3] === selectedRole;
+            const matchKeyword = row.some(cell => cell.toLowerCase().includes(keyword));
+            const matchRole = selectedRole === "" || row[2] === selectedRole;
             return matchKeyword && matchRole;
         });
 
