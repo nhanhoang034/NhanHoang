@@ -34,6 +34,7 @@ img {
     width: 50px;
     height: 50px;
     object-fit: cover; /* Đảm bảo ảnh không bị méo */
+    cursor: pointer; /* Thêm con trỏ khi hover lên ảnh */
 }
 
 /* Thêm kiểu cho modal ảnh */
