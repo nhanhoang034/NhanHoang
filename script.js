@@ -5,6 +5,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searchInput");
     const roleFilter = document.getElementById("roleFilter");
 
+    // Modal để hiển thị ảnh lớn
+    const imageModal = document.createElement("div");
+    imageModal.id = "imageModal";
+
+    const closeBtn = document.createElement("span");
+    closeBtn.id = "closeBtn";
+    closeBtn.textContent = "×"; // Dấu X để đóng
+    imageModal.appendChild(closeBtn);
+
+    const modalImg = document.createElement("img");
+    imageModal.appendChild(modalImg);
+    document.body.appendChild(imageModal);
+
+    closeBtn.addEventListener("click", function () {
+        imageModal.style.display = "none";
+    });
+
     async function loadCSV() {
         try {
             let response = await fetch('data.csv');
@@ -88,9 +105,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const imgCell = document.createElement("td");
             const img = document.createElement("img");
             img.src = row[3]; // Link ảnh từ cột Ảnh trong CSV
-            img.alt = "Ảnh học viên";
+            img.alt = "Chưa có ảnh";
             img.style.width = "50px";
             img.style.height = "50px";
+            img.style.cursor = "pointer"; // Thêm con trỏ khi hover lên ảnh
+            img.addEventListener("click", function () {
+                modalImg.src = img.src; // Gán ảnh vào modal
+                imageModal.style.display = "flex"; // Mở modal
+            });
             imgCell.appendChild(img);
             imgCell.style.backgroundColor = bgColor;
             imgCell.style.color = textColor;
