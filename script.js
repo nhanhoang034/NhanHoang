@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateTotalCount(count) {
         if (totalCount) {
-            totalCount.textContent = Hiện có: ${count} học viên;
+            totalCount.textContent = `Hiện có: ${count} học viên`;
         }
     }
 
@@ -102,3 +102,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadCSV();
 });
+
+
