@@ -52,10 +52,11 @@ img {
 }
 
 #imageModal img {
-    max-width: 500%; /* Tăng kích thước ảnh lên 90% màn hình */
-    max-height: 500%; /* Tăng chiều cao ảnh lên 90% màn hình */
+    max-width: 90%; /* Giới hạn ảnh tối đa 90% chiều rộng màn hình */
+    max-height: 90%; /* Giới hạn ảnh tối đa 90% chiều cao màn hình */
     object-fit: contain; /* Đảm bảo ảnh không bị méo và vừa vặn */
     image-rendering: crisp-edges; /* Cải thiện độ sắc nét của ảnh */
+    border-radius: 5px; /* Thêm một chút bo góc cho ảnh */
 }
 
 #closeBtn {
