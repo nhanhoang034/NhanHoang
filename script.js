@@ -20,8 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .slice(1) // Bỏ qua dòng tiêu đề
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
-                    if (cells.length < 4) cells[3] = "0"; // Nếu thiếu quyền, gán mặc định là 0
-                    cells[3] = cells[3].trim();
+                    if (cells.length < 4) cells[3] = "0"; // Gán mặc định quyền nếu thiếu
                     return cells;
                 });
 
@@ -43,31 +42,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
             switch (role) {
                 case "2":
-                    bgColor = "#ffff66"; textColor = "#000000"; break; // vàng
+                    bgColor = "#ffff66"; textColor = "#000000"; break;
                 case "3":
-                    bgColor = "#66cc66"; textColor = "#ffffff"; break; // xanh lá
+                    bgColor = "#66cc66"; textColor = "#ffffff"; break;
                 case "4":
-                    bgColor = "#3399ff"; textColor = "#ffffff"; break; // xanh dương
+                    bgColor = "#3399ff"; textColor = "#ffffff"; break;
                 case "5":
-                    bgColor = "#ff9900"; textColor = "#000000"; break; // cam
+                    bgColor = "#ff9900"; textColor = "#000000"; break;
                 case "6":
-                    bgColor = "#ff3333"; textColor = "#ffffff"; break; // đỏ
+                    bgColor = "#ff3333"; textColor = "#ffffff"; break;
                 case "7":
-                    bgColor = "#cc0000"; textColor = "#ffffff"; break; // đỏ đậm
+                    bgColor = "#cc0000"; textColor = "#ffffff"; break;
                 case "8":
-                    bgColor = "#996633"; textColor = "#ffffff"; break; // nâu
+                    bgColor = "#996633"; textColor = "#ffffff"; break;
                 case "9":
-                    bgColor = "#9966cc"; textColor = "#ffffff"; break; // tím
+                    bgColor = "#9966cc"; textColor = "#ffffff"; break;
                 case "20":
-                    bgColor = "#663399"; textColor = "#ffffff"; break; // tím đậm
+                    bgColor = "#663399"; textColor = "#ffffff"; break;
                 default:
-                    bgColor = "#cccccc"; textColor = "#000000"; break; // các quyền khác
+                    bgColor = "#cccccc"; textColor = "#000000"; break;
             }
 
-            // Ảnh
+            // Tạo các ô: Họ và tên, Mã hội viên, Quyền
+            for (let i = 1; i <= 3; i++) {
+                const td = document.createElement("td");
+                td.textContent = row[i];
+                td.style.backgroundColor = bgColor;
+                td.style.color = textColor;
+                tr.appendChild(td);
+            }
+
+            // Cột ảnh (lấy từ cột ảnh trong CSV)
             const imgTd = document.createElement("td");
             const img = document.createElement("img");
-            img.src = row[0] || "https://via.placeholder.com/60";
+            img.src = row[0]; // Lấy đường dẫn ảnh từ cột đầu tiên
             img.alt = "Ảnh";
             img.style.width = "60px";
             img.style.height = "60px";
@@ -76,16 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
             imgTd.appendChild(img);
             imgTd.style.textAlign = "center";
             imgTd.style.backgroundColor = bgColor;
+            imgTd.style.color = textColor;
             tr.appendChild(imgTd);
-
-            // Họ và tên, Mã hội viên, Quyền
-            for (let i = 1; i <= 3; i++) {
-                const td = document.createElement("td");
-                td.textContent = row[i];
-                td.style.backgroundColor = bgColor;
-                td.style.color = textColor;
-                tr.appendChild(td);
-            }
 
             tableBody.appendChild(tr);
         });
