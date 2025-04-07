@@ -1,60 +1,36 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Thông tin học viên</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        #controls {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        thead th {
-            background-color: #333;
-            color: #fff;
-            padding: 8px;
-        }
-        td {
-            text-align: center;
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
-        img {
-            object-fit: cover;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Tạo Và Cấp Quyền Bởi Nhân Hoàng</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Thông tin học viên</h1>
-    <div id="controls">
-        <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
-        <select id="roleFilter">
-            <option value="">Tất cả quyền</option>
-            <option value="2">Quyền 2</option>
-            <option value="3">Quyền 3</option>
-            <option value="4">Quyền 4</option>
-            <option value="5">Quyền 5</option>
-            <option value="6">Quyền 6</option>
-            <option value="7">Quyền 7</option>
-            <option value="8">Quyền 8</option>
-            <option value="9">Quyền 9</option>
-            <option value="20">Quyền 20</option>
-        </select>
+    <div class="info-bar">
+        <span id="totalCount">Hiện có: 0 học viên</span>
     </div>
-    <p id="totalCount">Hiện có: 0 học viên</p>
+
+    <h2>Danh Sách Tạo Và Cấp Quyền Bởi Nhân Hoàng</h2>
+
+    <input type="text" id="searchInput" placeholder="Nhập tên hoặc mã hội viên ...">
+
+    <label for="roleFilter">Quyền:</label>
+    <select id="roleFilter">
+        <option value="">Tất cả</option>
+        <option value="0">Quyền 0</option>
+        <option value="2">Quyền 2</option>
+        <option value="3">Quyền 3</option>
+        <option value="4">Quyền 4</option>
+        <option value="5">Quyền 5</option>
+        <option value="6">Quyền 6</option>
+        <option value="7">Quyền 7</option>
+        <option value="8">Quyền 8</option>
+        <option value="9">Quyền 9</option>
+        <option value="10">Quyền 10</option>
+        <option value="20">Quyền 20</option>
+    </select>
+
     <table>
         <thead>
             <tr>
@@ -64,7 +40,9 @@
                 <th>Quyền</th>
             </tr>
         </thead>
-        <tbody id="memberTable"></tbody>
+        <tbody id="memberTable">
+            <!-- Dữ liệu sẽ được thêm vào đây -->
+        </tbody>
     </table>
 
     <script src="script.js"></script>
