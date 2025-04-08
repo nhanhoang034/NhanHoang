@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     imageModal.appendChild(modalImg);
     document.body.appendChild(imageModal);
 
+    // Nếu ảnh bị lỗi, gán ảnh mặc định
+    modalImg.onerror = function () {
+        this.src = "default.jpg";
+    };
+
     closeBtn.addEventListener("click", function () {
         imageModal.style.display = "none";
     });
@@ -37,7 +42,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 .filter(line => line.trim() !== "") // Bỏ dòng trống
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
-                    if (cells.length < 4) cells[3] = ""; // Nếu thiếu ảnh, gán mặc định là rỗng
+                    if (cells.length < 4 || cells[3] === "") {
+                        cells[3] = "default.jpg"; // Gán ảnh mặc định nếu không có
+                    }
                     return cells;
                 });
 
@@ -77,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 case "20":
                     bgColor = "#663399"; textColor = "#ffffff"; break; // tím đậm
                 default:
-                    bgColor = "#cccccc"; textColor = "#000000"; break; // các quyền khác
+                    bgColor = "#cccccc"; textColor = "#000000"; break;
             }
 
             // Cột Họ và Tên
@@ -87,8 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
             nameCell.style.color = textColor;
             nameCell.style.cursor = "pointer";
             nameCell.addEventListener("click", function () {
-                modalImg.src = row[3]; // Gán ảnh vào modal
-                imageModal.style.display = "flex"; // Mở modal
+                modalImg.src = row[3] && row[3].trim() !== "" ? row[3] : "default.jpg";
+                imageModal.style.display = "flex";
             });
             tr.appendChild(nameCell);
 
