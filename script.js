@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     bgColor = "#996633"; textColor = "#ffffff"; break; // nâu
                 case "9":
                     bgColor = "#9966cc"; textColor = "#ffffff"; break; // tím
-                case "20":
+                case "GV":
                     bgColor = "#663399"; textColor = "#ffffff"; break; // tím đậm
                 default:
                     bgColor = "#cccccc"; textColor = "#000000"; break;
