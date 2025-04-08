@@ -32,8 +32,8 @@ th {
 
 /* Chỉ chỉnh ảnh trong bảng to hơn */
 td img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: cover; /* Đảm bảo ảnh không bị méo */
     cursor: pointer; /* Thêm con trỏ khi hover lên ảnh */
 }
