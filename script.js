@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data = csvData
                 .split(/\r?\n/)
-                .slice(1) // Bỏ qua dòng tiêu đề
+                .filter(line => line.trim() !== "") // Bỏ dòng trống
                 .map(line => {
                     let cells = line.split(',').map(cell => cell.trim());
                     if (cells.length < 4) cells[3] = ""; // Nếu thiếu ảnh, gán mặc định là rỗng
@@ -82,10 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Cột Họ và Tên
             const nameCell = document.createElement("td");
-            nameCell.textContent = row[0]; // Họ và Tên
+            nameCell.textContent = row[0];
             nameCell.style.backgroundColor = bgColor;
             nameCell.style.color = textColor;
-            nameCell.style.cursor = "pointer"; // Thêm con trỏ khi hover vào tên
+            nameCell.style.cursor = "pointer";
             nameCell.addEventListener("click", function () {
                 modalImg.src = row[3]; // Gán ảnh vào modal
                 imageModal.style.display = "flex"; // Mở modal
@@ -94,14 +94,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Cột Mã Hội Viên
             const memberCodeCell = document.createElement("td");
-            memberCodeCell.textContent = row[1]; // Mã Hội Viên
+            memberCodeCell.textContent = row[1];
             memberCodeCell.style.backgroundColor = bgColor;
             memberCodeCell.style.color = textColor;
             tr.appendChild(memberCodeCell);
 
             // Cột Quyền
             const roleCell = document.createElement("td");
-            roleCell.textContent = row[2]; // Quyền
+            roleCell.textContent = row[2];
             roleCell.style.backgroundColor = bgColor;
             roleCell.style.color = textColor;
             tr.appendChild(roleCell);
